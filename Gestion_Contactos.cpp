@@ -58,12 +58,28 @@ void Eliminarcontacto(){
 		cout<<"Contacto no encontrado"<<endl;
 	}
 }
+void Mostrarcontactos(){
+	if(Tctc==0){
+		cout<<"No hay contactos registrados"<<endl;
+	}
+	for(int i= 0; i<Tctc; i++){
+		contactoEmail c = Ag[i];
+		cout<<"Contacto #"<<i+1<<": "<<endl;
+		cout<<"Nombre completo: "<< c.Nom<<endl;
+		cout<<"Sexo: "<<c.Sx<<endl;
+		cout<<"Edad: "<<c.Eda<<endl;
+		cout<<"Numero de telefono: "<<c.Tel<<endl;
+		cout<<"Email: "<<c.Mail<<endl;
+		cout<<"Nacionalidad: "<<c.Nac<<endl;
+	}
+}
 void menu(){
 	char op;
 	while(op!='5'){
 		cout<<"Menu"<<endl;
 		cout<<"1) Agregar contacto"<<endl;
 		cout<<"2) Eliminar contacto"<<endl;
+		cout<<"3) Mostrar listado general de contactos"<<endl;
 		cout<<"Seleccione una opcion"<<endl;
 		cin>>op;
 		cin.ignore();
@@ -71,6 +87,8 @@ void menu(){
 			Agregarcontacto();
 		}else if(op=='2'){
 			Eliminarcontacto();
+		}else if(op=='3'){
+			Mostrarcontactos();
 		}
 	}
 }
