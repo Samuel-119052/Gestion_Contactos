@@ -1,7 +1,7 @@
 #include<iostream>
 using namespace std;
 const int Ctc = 100;
-struct Contacto {
+struct contactoEmail{
 	string Nom;
 	string Sx;
 	int Eda;
@@ -9,11 +9,11 @@ struct Contacto {
 	string Mail;
 	string Nac;
 };
-Contacto Ag[Ctc];
+contactoEmail Ag[Ctc];
 int Tctc = 0;
 void Agregarcontacto(){
 	if(Tctc<Ctc){
-		Contacto nuevo;
+		contactoEmail nuevo;
 		cout<<"Nombre completo: ";
 		getline(cin, nuevo.Nom);
 		cout<<"Sexo: ";
@@ -38,16 +38,39 @@ void Agregarcontacto(){
 		cout<<"No se puede agregar mas contactos. Limite alcanzado"<<endl;
 	}
 }
+void Eliminarcontacto(){
+	string BuContc;
+	cout<<"Ingrese el email del contacto a eliminar: ";
+	getline(cin, BuContc);
+	int ContcEli = -1;
+	for(int i= 0; i < Tctc; i++){
+		if(Ag[i].Mail == BuContc){
+			ContcEli=i;
+		}
+	}
+	if(ContcEli != -1){
+		for(int j = ContcEli; j<Tctc-1; j++){
+			Ag[j]=Ag[j+1];
+		}
+		Tctc--;
+		cout<<"Contacto eliminado"<<endl;
+	}else{
+		cout<<"Contacto no encontrado"<<endl;
+	}
+}
 void menu(){
 	char op;
 	while(op!='5'){
 		cout<<"Menu"<<endl;
 		cout<<"1) Agregar contacto"<<endl;
+		cout<<"2) Eliminar contacto"<<endl;
 		cout<<"Seleccione una opcion"<<endl;
 		cin>>op;
 		cin.ignore();
 		if(op=='1'){
 			Agregarcontacto();
+		}else if(op=='2'){
+			Eliminarcontacto();
 		}
 	}
 }
