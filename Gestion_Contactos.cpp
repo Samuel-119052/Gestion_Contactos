@@ -132,6 +132,7 @@ void menu(){
 		cout<<"2) Eliminar contacto"<<endl;
 		cout<<"3) Mostrar listado general de contactos"<<endl;
 		cout<<"4) Mostrar listado de contactos por servidor de correo"<<endl;
+		cout<<"5) Salir"<<endl;
 		cout<<"Seleccione una opcion"<<endl;
 		cin>>op;
 		cin.ignore();
@@ -143,6 +144,10 @@ void menu(){
 			Mostrarcontactos();
 		}else if(op=='4'){
 			Mostrarcontactosporservidor();
+		}else if(op=='5'){
+			cout<<"Saliendo del programa..."<<endl;
+		}else{
+			cout<<"Opcion no valida. Intente de nuevo"<<endl;
 		}
 	}
 }
