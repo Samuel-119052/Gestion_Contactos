@@ -39,23 +39,27 @@ void Agregarcontacto(){
 	}
 }
 void Eliminarcontacto(){
-	string BuContc;
-	cout<<"Ingrese el email del contacto a eliminar: ";
-	getline(cin, BuContc);
-	int ContcEli = -1;
-	for(int i= 0; i < Tctc; i++){
-		if(Ag[i].Mail == BuContc){
-			ContcEli=i;
-		}
-	}
-	if(ContcEli != -1){
-		for(int j = ContcEli; j<Tctc-1; j++){
-			Ag[j]=Ag[j+1];
-		}
-		Tctc--;
-		cout<<"Contacto eliminado"<<endl;
+	if(Tctc==0){
+		cout<<"No hay contactos registrados"<<endl;
 	}else{
-		cout<<"Contacto no encontrado"<<endl;
+		string BuContc;
+		cout<<"Ingrese el email del contacto a eliminar: ";
+		getline(cin, BuContc);
+		int ContcEli = -1;
+		for(int i= 0; i < Tctc; i++){
+			if(Ag[i].Mail == BuContc){
+				ContcEli=i;
+			}
+		}
+		if(ContcEli != -1){
+			for(int j = ContcEli; j<Tctc-1; j++){
+				Ag[j]=Ag[j+1];
+			}
+			Tctc--;
+			cout<<"Contacto eliminado"<<endl;
+		}else{
+			cout<<"Contacto no encontrado"<<endl;
+		}
 	}
 }
 void Mostrarcontactos(){
@@ -73,6 +77,53 @@ void Mostrarcontactos(){
 		cout<<"Nacionalidad: "<<c.Nac<<endl;
 	}
 }
+string Obtenerservidor(const string& Mail){
+	string serv = "";
+	bool Arb = false;
+	for(int i=0; Mail[i]!='\0'; i++){
+		if(Arb){
+			serv += Mail[i];
+		}
+		if(Mail[i]=='@'){
+			Arb = true;
+		}
+	}
+	return serv;
+}
+void Mostrarcontactosporservidor(){
+	if(Tctc==0){
+		cout<<"No hay contactos registrados"<<endl;
+	}else{
+		contactoEmail aux[Ctc];
+		for(int i=0; i<Tctc; i++){
+			aux[i]=Ag[i];
+		}
+		for(int i=0; i<Tctc; i++){
+			for(int j=0; j<Tctc-i-1; j++){
+				string serv1 = Obtenerservidor(aux[i].Mail);
+				string serv2 = Obtenerservidor(aux[j].Mail);
+				if(serv1>serv2){
+					contactoEmail aux1 = aux[i];
+					aux[i] = aux[j];
+					aux[j] = aux1;
+				}
+			}
+		}
+		string sev = "";
+		for(int i=0; i<Tctc; i++){
+			string sv = Obtenerservidor(aux[i].Mail);
+			if(sv != sev){
+				cout<<"\nServidor: "<<sv<<endl;
+				sev=sv;
+			}
+			cout<<" - "<< aux[i].Nom << " ("<<aux[i].Mail<<") "<<endl;
+			cout<<"Sexo: "<<aux[i].Sx<<endl;
+			cout<<"Edad: "<<aux[i].Eda<<endl;
+			cout<<"Telefono: "<<aux[i].Tel<<endl;
+			cout<<"Nacionalidad: "<<aux[i].Nac<<endl;
+		}
+	}
+}
 void menu(){
 	char op;
 	while(op!='5'){
@@ -80,6 +131,7 @@ void menu(){
 		cout<<"1) Agregar contacto"<<endl;
 		cout<<"2) Eliminar contacto"<<endl;
 		cout<<"3) Mostrar listado general de contactos"<<endl;
+		cout<<"4) Mostrar listado de contactos por servidor de correo"<<endl;
 		cout<<"Seleccione una opcion"<<endl;
 		cin>>op;
 		cin.ignore();
@@ -89,6 +141,8 @@ void menu(){
 			Eliminarcontacto();
 		}else if(op=='3'){
 			Mostrarcontactos();
+		}else if(op=='4'){
+			Mostrarcontactosporservidor();
 		}
 	}
 }
